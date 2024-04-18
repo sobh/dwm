@@ -64,3 +64,6 @@ Applied patches are tagged with `patch-<patchname>` in the commit history.
   *[preserveonstart](https://dwm.suckless.org/patches/preserveonrestart/)* :
   Preserves the client tags upon restart. However, the layout order is not
   preserved.
+- [99bbb42](https://github.com/sobh/dwm/commit/99bbb42/) |
+  *[noborder](https://dwm.suckless.org/patches/noborder/)* :
+  Remove the border when there is only one window visible.
