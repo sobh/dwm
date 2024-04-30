@@ -67,3 +67,6 @@ Applied patches are tagged with `patch-<patchname>` in the commit history.
 - [99bbb42](https://github.com/sobh/dwm/commit/99bbb42/) |
   *[noborder](https://dwm.suckless.org/patches/noborder/)* :
   Remove the border when there is only one window visible.
+- [0e02c04 ](https://github.com/sobh/dwm/commit/0e02c04 /) |
+  *[systray](https://dwm.suckless.org/patches/systray/)* :
+  A simple system tray implementation.
