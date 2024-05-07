@@ -266,7 +266,7 @@ static void zoom(const Arg *arg);
 /* variables */
 static Systray *systray = NULL;
 static const char broken[] = "broken";
-static char stext[256];
+static char stext[256];      /* bar status text */
 static int screen;
 static int sw, sh;           /* X display screen geometry width, height */
 static int bh;               /* bar height */
@@ -790,6 +790,7 @@ dirtomon(int dir)
 void
 drawbar(Monitor *m)
 {
+	/* tw: Status Text Width | stw: Systray Width */
 	int x, w, tw = 0, stw = 0;
 	int boxs = drw->fonts->h / 9;
 	int boxw = drw->fonts->h / 6 + 2;
