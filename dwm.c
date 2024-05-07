@@ -41,6 +41,7 @@
 
 #include "drw.h"
 #include "util.h"
+#include "debug.h"
 
 /* macros */
 #define BUTTONMASK              (ButtonPressMask|ButtonReleaseMask)
@@ -527,6 +528,7 @@ cleanup(void)
 	for (i = 0; i < LENGTH(colors); i++)
 		free(scheme[i]);
 	free(scheme);
+	dbg_cleanup();
 	XDestroyWindow(dpy, wmcheckwin);
 	drw_free(drw);
 	XSync(dpy, False);
@@ -808,7 +810,8 @@ drawbar(Monitor *m)
 		drw_setscheme(drw, scheme[SchemeNorm]);
 		tw = TEXTW(stext) - lrpad / 2 + 2; /* 2px extra right padding */
 		drw_text(drw, m->ww - tw - stw, 0, tw, bh, lrpad / 2 - 2, stext, 0);
-	}
+                /* dbg_drw_rect(drw, m->ww - tw - stw, 0, tw, bh, 0, 0); */
+        }
 
 	resizebarwin(m);
 	for (c = m->clients; c; c = c->next) {
@@ -1803,6 +1806,8 @@ setup(void)
 	cursor[CurNormal] = drw_cur_create(drw, XC_left_ptr);
 	cursor[CurResize] = drw_cur_create(drw, XC_sizing);
 	cursor[CurMove] = drw_cur_create(drw, XC_fleur);
+	/* init debug */
+	dbg_init(drw);
 	/* init appearance */
 	scheme = ecalloc(LENGTH(colors), sizeof(Clr *));
 	for (i = 0; i < LENGTH(colors); i++)
