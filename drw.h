@@ -1,5 +1,11 @@
 /* See LICENSE file for copyright and license details. */
+#ifndef DRW_H
+#define DRW_H
 
+/* ---- Includes ------------------------------------------------------------ */
+#include <X11/Xft/Xft.h>
+
+/* ---- Types --------------------------------------------------------------- */
 typedef struct {
 	Cursor cursor;
 } Cur;
@@ -26,6 +32,7 @@ typedef struct {
 	Fnt *fonts;
 } Drw;
 
+/* ---- Functions ----------------------------------------------------------- */
 /* Drawable abstraction */
 Drw *drw_create(Display *dpy, int screen, Window win, unsigned int w, unsigned int h);
 void drw_resize(Drw *drw, unsigned int w, unsigned int h);
@@ -56,3 +63,5 @@ int drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned in
 
 /* Map functions */
 void drw_map(Drw *drw, Window win, int x, int y, unsigned int w, unsigned int h);
+
+#endif /* DRW_H */
