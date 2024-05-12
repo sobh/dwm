@@ -74,3 +74,6 @@ Applied patches are tagged with `patch-<patchname>` in the commit history.
   *[statuscmd](https://dwm.suckless.org/patches/statuscmd/)* :
   Signal a status monitor program the location, and the button when clicking on
   the status bar.
+- [7501e9a](https://github.com/sobh/dwm/commit/7501e9a/) |
+  *[hide_vacant_tags](https://dwm.suckless.org/patches/hide_vacant_tags/)* :
+  Only draw tags that have clients on the status bar.
