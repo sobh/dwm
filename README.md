@@ -70,3 +70,7 @@ Applied patches are tagged with `patch-<patchname>` in the commit history.
 - [0e02c04 ](https://github.com/sobh/dwm/commit/0e02c04/) |
   *[systray](https://dwm.suckless.org/patches/systray/)* :
   A simple system tray implementation.
+- [f8bef23](https://github.com/sobh/dwm/commit/f8bef23/) |
+  *[statuscmd](https://dwm.suckless.org/patches/statuscmd/)* :
+  Signal a status monitor program the location, and the button when clicking on
+  the status bar.
