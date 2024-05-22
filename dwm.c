@@ -274,7 +274,6 @@ static const char broken[] = "broken";
 static char stext[256] = "Test";      /* bar status text */
 static char rawstext[256];   /* raw bar status text (each block is prefixed by
                                 its signal) */
-static int statusw;          /* bar status width */
 static int statussig;
 static pid_t statuspid = -1;
 static int screen;
@@ -488,9 +487,9 @@ buttonpress(XEvent *e)
 			arg.ui = 1 << i;
 		} else if (ev->x < x + TEXTW(selmon->ltsymbol))
 			click = ClkLtSymbol;
-		else if (ev->x > selmon->ww - statusw - getsystraywidth()) {
+		else if (ev->x > selmon->ww - TEXTW(stext) - getsystraywidth()) {
 			click = ClkStatusText;
-			x = selmon->ww - statusw - getsystraywidth();
+			x = selmon->ww - TEXTW(stext) - getsystraywidth();
 			statussig = 0;
 			char *text, *s, ch;
 			for (text = s = rawstext; *s && x <= ev->x; s++) {
@@ -836,8 +835,7 @@ dirtomon(int dir)
 void
 drawbar(Monitor *m)
 {
-	/* tw: Status Text Width | stw: Systray Width */
-	int x, w, stw = 0;
+	int x, w, status_width = 0, systray_width = 0;
 	int boxs = drw->fonts->h / 9;
 	int boxw = drw->fonts->h / 6 + 2;
 	unsigned int i, occ = 0, urg = 0;
@@ -847,13 +845,13 @@ drawbar(Monitor *m)
 		return;
 
 	if(showsystray && m == systraytomon(m) && !systrayonleft)
-		stw = getsystraywidth();
+		systray_width = getsystraywidth();
 
 	/* draw status first so it can be overdrawn by tags later */
 	if (m == selmon) { /* status is only drawn on selected monitor */
+		status_width = TEXTW(stext);
 		drw_setscheme(drw, scheme[SchemeNorm]);
-		drw_text(drw, m->ww - statusw - stw, 0, statusw, bh, lrpad/2, stext, 0);
-/*                 dbg_drw_rect(drw, m->ww - statusw - stw, 0, statusw, bh, 0, 0); */
+		drw_text(drw, m->ww - status_width - systray_width, 0, status_width, bh, lrpad/2, stext, 0);
 	}
 
 	resizebarwin(m);
@@ -876,7 +874,7 @@ drawbar(Monitor *m)
 	drw_setscheme(drw, scheme[SchemeNorm]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
-	if ((w = m->ww - statusw - stw - x) > bh) {
+	if ((w = m->ww - status_width - systray_width - x) > bh) {
 		if (m->sel) {
 			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
 			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
@@ -887,7 +885,7 @@ drawbar(Monitor *m)
 			drw_rect(drw, x, 0, w, bh, 1, 1);
 		}
 	}
-	drw_map(drw, m->barwin, 0, 0, m->ww - stw, bh);
+	drw_map(drw, m->barwin, 0, 0, m->ww - systray_width, bh);
 }
 
 void
@@ -2365,7 +2363,6 @@ updatestatus(void)
 	} else {
 		copyvalidchars(stext, rawstext);
 	}
-	statusw = TEXTW(stext);
 	drawbar(selmon);
 	updatesystray();
 }
